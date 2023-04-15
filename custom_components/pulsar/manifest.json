@@ -1,0 +1,15 @@
+{
+    "domain": "pulsar",
+    "name": "Pulsar meters",
+    "version": "1.0.0",
+    "config_flow": true,
+    "integration_type": "device",
+    "documentation": "https://github.com/KnyazSh/ha-pulsar",
+    "issue_tracker": "https://github.com/KnyazSh/ha-pulsar/issues",
+    "requirements": [
+      "pyserial==3.5",
+      "pyserial-asyncio==0.6"
+    ],
+    "codeowners": ["@KnyazSh"],
+    "iot_class": "local_polling"
+  }

@@ -1,0 +1,12 @@
+FROM mcr.microsoft.com/vscode/devcontainers/python:0-3.10
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+WORKDIR /workspaces
+
+COPY requirements_dev.txt ./
+RUN pip3 install --upgrade -r requirements_dev.txt --use-deprecated=legacy-resolver
+RUN rm -rf requirements_dev.txt
+
+# Set the default shell to bash instead of sh
+ENV SHELL /bin/bash

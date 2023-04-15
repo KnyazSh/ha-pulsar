@@ -1,0 +1,6 @@
+{
+    "name": "Pulsar meters",
+    "homeassistant": "2023.3",
+    "country":  ["RU", "BY", "KZ", "UZ"],
+    "render_readme": true
+}

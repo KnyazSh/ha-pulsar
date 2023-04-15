@@ -1,0 +1,4 @@
+# Requirements for Pulsar integration development
+homeassistant
+pyserial
+pyserial-asyncio

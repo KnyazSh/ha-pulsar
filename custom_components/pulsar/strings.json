@@ -1,0 +1,127 @@
+{
+    "config": {
+        "abort": {
+            "address_already_configured": "Device with this address is already configured",
+            "name_already_exists": "Device with this name is already exists"
+        },
+        "error": {
+            "cannot_connect": "Failed to connect"
+        },
+        "flow_title": "{name}",
+        "step": {
+            "choose_serial_port": {
+                "data": {
+                    "device_or_address": "Serial Device Path"
+                },
+                "description": "Select the serial port for your meters",
+                "title": "Select a Serial Port"
+            },
+            "manual_port_config": {
+                "data": {
+                    "device_or_address": "Serial device path or IP address"
+                },
+                "description": "Enter the serial port settings",
+                "title": "Serial Port Settings"
+            },
+            "configure_device": {
+                "data": {
+                    "name": "Enter name for device",
+                    "serial_id": "Enter device serial number",
+                    "type": "Choose type of device"
+                },
+                "description": "Enter the device settings",
+                "title": "Add device"
+            },
+            "add_menu": {
+                "menu_options":{
+                    "add_device": "Add device",
+                    "complete": "Complete"
+                },
+                "description": "You can add additional device or complete setup",
+                "title": "Add device"
+            }
+        }
+    },
+    "options": {
+        "flow_title": "{name}",
+        "abort": {
+            "address_already_configured": "Device with this address is already configured",
+            "name_already_exists": "Device with this name is already exists"
+        },
+        "step": {
+            "yaml_import": {
+                "title": "Not Supported",
+                "description": "Options cannot be edited when configured via YAML."
+            },
+            "init": {
+                "title": "Pulse Configuration",
+                "description": "Please select the desired action.",
+                "data": {
+                    "add_device": "Add a new device",
+                    "edit_device": "Edit a device",
+                    "change_port": "Change port settings"
+                }
+            },
+            "choose_serial_port": {
+                "data": {
+                    "device_or_address": "Serial Device Path"
+                },
+                "description": "Select the serial port for your Zigbee radio",
+                "title": "Select a Serial Port"
+            },
+            "manual_port_config": {
+                "data": {
+                    "device_or_address": "Serial device path or IP address"
+                },
+                "description": "Enter the serial port settings",
+                "title": "Serial Port Settings"
+            },
+            "configure_device": {
+                "data": {
+                    "name": "Enter name for device",
+                    "serial_id": "Enter device serial number",
+                    "type": "Choose type of device"
+                },
+                "description": "Enter the device settings",
+                "title": "Add device"
+            },
+            "add_device": {
+                "title": "Add a new device",
+                "description": "Add a device."
+            },
+            "edit_device": {
+                "title": "Edit a new device",
+                "description": "Pick the configured device you wish to edit.",
+                "data": {
+                    "selected_device": "Configured Devices"
+                }
+            },
+            "change_port": {
+                "title": "Edit port settings",
+                "description": "You can change port settings."
+            },
+            "add_menu": {
+                "menu_options":{
+                    "add_device": "Add device",
+                    "complete": "Complete"
+                },
+                "description": "You can add additional device or complete setup",
+                "title": "Add device"
+            }
+        }
+    },
+    "entity": {
+        "sensor": {
+            "current_water_consumption_ch1": {
+                "name": "Current water consumption"
+            },
+            "system_time": {
+                "name": "System time"
+            },
+            "device_temperature": {
+                "name": "Temperature of meter"
+            }
+
+        }
+    }
+}
