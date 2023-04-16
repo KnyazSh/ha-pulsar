@@ -1,7 +1,7 @@
 {
     "domain": "pulsar",
     "name": "Pulsar meters",
-    "version": "1.0.0",
+    "version": "v1.0.0",
     "config_flow": true,
     "integration_type": "device",
     "documentation": "https://github.com/KnyazSh/ha-pulsar",
