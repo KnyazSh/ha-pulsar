@@ -35,7 +35,7 @@ class Connector(object):
         Returns True if successful
         """
         try:
-            if self._serport is not None:
+            if self._serport is not None and self._serport.is_open:
                 self._serport.close()
                 self._serport = None
 
@@ -48,7 +48,9 @@ class Connector(object):
                     f"socket://{self._device_or_ipaddress}")
             # Ensures that the serial port has not
             # been left hanging around by a previous process.
-            self._serport.close()
+
+            if self._serport.is_open:
+                self._serport.close()
             self._serport.baudrate = DEFAULT_BAUDRATE
             self._serport.bytesize = DEFAULT_BYTESIZE
             self._serport.parity = DEFAULT_PARITY
@@ -137,7 +139,7 @@ class Connector(object):
 
     def disconnect(self):
         """disconnects from the serial port or tcp connection"""
-        if self._serport is not None:
+        if self._serport is not None and self._serport.is_open:
             self._serport.close()
             self._serport = None
             _LOGGER.info(f"Closed serial port {self._device_or_ipaddress}")
