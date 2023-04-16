@@ -19,19 +19,21 @@ from homeassistant.data_entry_flow import FlowHandler, FlowResult
 from .connector import Connector
 
 from .const import (
-    CONF_ACTION,
-    CONF_ADD_DEVICE,
-    CONF_CHANGE_PORT,
     CONF_DEVICE_CONFIG,
     CONF_DEVICE_OR_ADDRESS,
-    CONF_EDIT_DEVICE,
     CONF_MANUAL_PATH,
     CONF_NAME,
     CONF_SERIAL_ID,
     CONF_TYPE,
     DOMAIN,
-    STEP_ADD_DEVICE,
+    STEP_ADD_MENU,
+    STEP_CHANGE_PORT,
+    STEP_CHOOSE_SERIAL_PORT,
     STEP_COMPLETE,
+    STEP_CONFIGURE_DEVICE,
+    STEP_CONFIGURE_MENU,
+    STEP_EDIT_DEVICE,
+    STEP_MANUAL_PORT_CONFIG,
     PulsarType
 )
 
@@ -42,18 +44,6 @@ DEVICE_CONFIG_SCHEMA_ENTRY = vol.Schema(
         vol.Required(CONF_NAME): cv.string,
         vol.Required(CONF_SERIAL_ID): cv.positive_int,
         vol.Required(CONF_TYPE): vol.In([e.value for e in PulsarType])
-    }
-)
-
-CONF_ACTIONS = {
-    STEP_ADD_DEVICE: "Add a new device",
-    CONF_EDIT_DEVICE: "Edit a device",
-    CONF_CHANGE_PORT: "Change port"
-}
-
-CONFIGURE_SCHEMA = vol.Schema(
-    {
-        vol.Required(CONF_ACTION, default=STEP_ADD_DEVICE): vol.In(CONF_ACTIONS),
     }
 )
 
@@ -170,7 +160,11 @@ class BaseFlow(FlowHandler):
                 )
             }
         )
-        return self.async_show_form(step_id="choose_serial_port", data_schema=schema)
+
+        return self.async_show_form(
+            step_id=STEP_CHOOSE_SERIAL_PORT,
+            data_schema=schema
+        )
 
     async def async_step_manual_port_config(
         self, user_input: dict[str, Any] | None = None
@@ -203,7 +197,7 @@ class BaseFlow(FlowHandler):
         )
 
         return self.async_show_form(
-            step_id="manual_port_config",
+            step_id=STEP_MANUAL_PORT_CONFIG,
             data_schema=schema,
             errors=errors,
         )
@@ -251,6 +245,9 @@ class BaseFlow(FlowHandler):
                         )
 
                 self._device_data[edit_dev_conf_id] = device_conf
+
+                self.editing_device = False
+                self.selected_device = None
 
             else:
 
@@ -304,7 +301,7 @@ class BaseFlow(FlowHandler):
         schema = schema_defaults(DEVICE_CONFIG_SCHEMA_ENTRY, **defaults)
 
         return self.async_show_form(
-            step_id="configure_device",
+            step_id=STEP_CONFIGURE_DEVICE,
             data_schema=schema,
             errors=errors,
             description_placeholders=placeholders
@@ -321,10 +318,10 @@ class BaseFlow(FlowHandler):
         self, user_input: dict[str, Any] | None = None
     ) -> FlowResult:
         """Add device."""
-        options = [STEP_ADD_DEVICE, STEP_COMPLETE]
+        options = [STEP_CONFIGURE_DEVICE, STEP_COMPLETE]
 
         return self.async_show_menu(
-            step_id="add_menu",
+            step_id=STEP_ADD_MENU,
             menu_options=options
         )
 
@@ -367,18 +364,17 @@ class OptionsFlowHandler(BaseFlow, config_entries.OptionsFlow):
             self, user_input: dict[str, Any] | None = None) -> FlowResult:
         """Handle the initial step."""
 
-        if user_input is not None:
-            action = user_input.get(CONF_ACTION)
-            if action == CONF_ADD_DEVICE:
-                return await self.async_step_configure_device()
-            if action == CONF_EDIT_DEVICE:
-                return await self.async_step_edit_device()
-            if action == CONF_CHANGE_PORT:
-                return await self.async_step_change_port()
+        return await self.async_step_configure_menu()
 
-        return self.async_show_form(
-            step_id="init",
-            data_schema=CONFIGURE_SCHEMA,
+    async def async_step_configure_menu(
+        self, user_input: dict[str, Any] | None = None
+    ) -> FlowResult:
+        options = [STEP_CONFIGURE_DEVICE, STEP_EDIT_DEVICE,
+                   STEP_CHANGE_PORT]
+
+        return self.async_show_menu(
+            step_id=STEP_CONFIGURE_MENU,
+            menu_options=options
         )
 
     async def async_step_change_port(self, user_input=None) -> FlowResult:
@@ -403,7 +399,7 @@ class OptionsFlowHandler(BaseFlow, config_entries.OptionsFlow):
             {vol.Required(SELECTED_DEVICE): vol.In(devices)})
 
         return self.async_show_form(
-            step_id="edit_device",
+            step_id=STEP_EDIT_DEVICE,
             data_schema=devices_schema,
             errors=errors
         )

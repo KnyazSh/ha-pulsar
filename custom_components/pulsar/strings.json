@@ -34,7 +34,7 @@
             },
             "add_menu": {
                 "menu_options":{
-                    "add_device": "Add device",
+                    "configure_device": "Add device",
                     "complete": "Complete"
                 },
                 "description": "You can add additional device or complete setup",
@@ -53,11 +53,11 @@
                 "title": "Not Supported",
                 "description": "Options cannot be edited when configured via YAML."
             },
-            "init": {
+            "configure_menu": {
                 "title": "Pulse Configuration",
                 "description": "Please select the desired action.",
-                "data": {
-                    "add_device": "Add a new device",
+                "menu_options": {
+                    "configure_device": "Add a new device",
                     "edit_device": "Edit a device",
                     "change_port": "Change port settings"
                 }
@@ -85,10 +85,6 @@
                 "description": "Enter the device settings",
                 "title": "Add device"
             },
-            "add_device": {
-                "title": "Add a new device",
-                "description": "Add a device."
-            },
             "edit_device": {
                 "title": "Edit a new device",
                 "description": "Pick the configured device you wish to edit.",
@@ -102,7 +98,7 @@
             },
             "add_menu": {
                 "menu_options":{
-                    "add_device": "Add device",
+                    "configure_device": "Add device",
                     "complete": "Complete"
                 },
                 "description": "You can add additional device or complete setup",

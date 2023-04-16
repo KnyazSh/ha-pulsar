@@ -80,7 +80,14 @@ class PulsarDevice(object):
         else:
             raise Exception("unreachable size")
 
-        return struct.unpack(format, buf[offset:size + offset])
+        val = struct.unpack(format, buf[offset:size + offset])
+
+        if len(val) == 1:
+            return val[0]
+        elif len(val) == 0:
+            return None
+        else:
+            return val
 
     def send_request(self, message: bytes, response_size: int) -> bytes:
         addr = self.read_bcd(message, self.ADDR_SIZE, 0, True)
